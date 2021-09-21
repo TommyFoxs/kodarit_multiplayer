@@ -14,4 +14,14 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
         //Tämä luo huoneen
         PhotonNetwork.CreateRoom(createInput.text);
     }
+
+    public void JoinRoom(){
+        PhotonNetwork.JoinRoom(joinInput.text);
+    }
+
+    public override void OnJoinedRoom(){
+        PhotonNetwork.LoadLevel("Game");
+    }
+
+
 }
