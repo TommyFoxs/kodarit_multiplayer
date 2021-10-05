@@ -25,17 +25,40 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-         CheckIfGrounded();
+         
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        CheckIfGrounded();
+        Move();
     }
 
 
-    private void CheckIfGrounded(){
-        
+    private void CheckIfGrounded()
+    {
+        isGrounded = Physics.CheckSphere(groundCheck.position,groundDistance,groundMask);
+
+        if(isGrounded)
+        {
+            velocity.y = -1;
+        }
+        else{
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+        }
+   //     velocity.y += gravity * Time.deltaTime;
+   //     controller.Move(velocity * Time.deltaTime);
+
+    }
+
+    public void Move()
+    {
+        float xAxis = Input.GetAxis("Horizontal");
+        float zAxis = Input.GetAxis("Vertical");
+
+        move = transform.right * xAxis + transform.forward * zAxis;
+        controller.Move(move * moveSpeed * Time.deltaTime);
     }
 }
