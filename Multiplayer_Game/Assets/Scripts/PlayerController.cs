@@ -59,6 +59,14 @@ public class PlayerController : MonoBehaviour
         float zAxis = Input.GetAxis("Vertical");
 
         move = transform.right * xAxis + transform.forward * zAxis;
-        controller.Move(move * moveSpeed * Time.deltaTime);
+
+        float targetSpeed  = Input.GetButton("Fire1") ? runSpeed : moveSpeed;
+        if(move == Vector3.zero)
+        {
+            targetSpeed = 0;
+        }
+
+
+        controller.Move(move * targetSpeed * Time.deltaTime);
     }
 }
