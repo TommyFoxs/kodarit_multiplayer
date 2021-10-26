@@ -1168,7 +1168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 8
   runSpeed: 14
-  jumpheight: 14
+  jumpheight: 3
   gravity: -9.8
   isGrounded: 0
   groundCheck: {fileID: 1543593212}
@@ -1177,3 +1177,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   velocity: {x: 0, y: 0, z: 0}
+  doubleJump: 1

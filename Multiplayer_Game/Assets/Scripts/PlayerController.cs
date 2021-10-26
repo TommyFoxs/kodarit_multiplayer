@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 8f;
     public float runSpeed = 14f;
     
-    public float jumpheight = 14f;
+    public float jumpheight = 1f;
     public float gravity = -9.8f;
 
     [SerializeField] private bool isGrounded;
@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 velocity;
 
+    public bool doubleJump = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +35,7 @@ public class PlayerController : MonoBehaviour
     {
         CheckIfGrounded();
         Move();
+        Jump();
     }
 
 
@@ -43,6 +46,7 @@ public class PlayerController : MonoBehaviour
         if(isGrounded)
         {
             velocity.y = -1;
+            doubleJump = true;
         }
         else{
             velocity.y += gravity * Time.deltaTime;
@@ -68,5 +72,21 @@ public class PlayerController : MonoBehaviour
 
 
         controller.Move(move * targetSpeed * Time.deltaTime);
+    }
+
+
+    public void Jump()
+    {
+        if(Input.GetButtonDown("Jump") && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpheight * -2f * gravity);
+        }
+        else if(Input.GetButtonDown("Jump") && doubleJump == true)
+        {
+            velocity.y = Mathf.Sqrt(jumpheight * -2f * gravity);
+            doubleJump = false;
+        }
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
     }
 }
