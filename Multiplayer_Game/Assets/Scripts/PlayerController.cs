@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     public Vector3 velocity;
 
     public bool doubleJump = true;
+    
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +44,7 @@ public class PlayerController : MonoBehaviour
     private void CheckIfGrounded()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position,groundDistance,groundMask);
+        animator.SetBool("Grounded",isGrounded);
 
         if(isGrounded)
         {
@@ -65,12 +68,13 @@ public class PlayerController : MonoBehaviour
         move = transform.right * xAxis + transform.forward * zAxis;
 
         float targetSpeed  = Input.GetButton("Fire1") ? runSpeed : moveSpeed;
+
         if(move == Vector3.zero)
         {
             targetSpeed = 0;
         }
 
-
+        animator.SetFloat("Speed",targetSpeed);
         controller.Move(move * targetSpeed * Time.deltaTime);
     }
 
